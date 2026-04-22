@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Splitsvilla Proposal | Will You Be My Partner?</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #ff9a9e 0%, #fad0c4 50%, #ffdde1 100%);
+      font-family: 'Segoe UI', 'Poppins', 'Quicksand', system-ui, -apple-system, cursive, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      position: relative;
+      touch-action: pan-y;
+    }
+
+    /* floating balloons container */
+    .balloon-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .heart-balloon {
+      position: absolute;
+      font-size: 2rem;
+      filter: drop-shadow(0 8px 12px rgba(0,0,0,0.2));
+      animation: floatAround 12s infinite ease-in-out;
+      pointer-events: none;
+      will-change: transform;
+      z-index: 2;
+      text-shadow: 0 2px 5px rgba(255,80,120,0.3);
+    }
+
+    @keyframes floatAround {
+      0% { transform: translate(0, 0) rotate(0deg); opacity: 0.9; }
+      25% { transform: translate(30px, -45px) rotate(8deg); }
+      50% { transform: translate(-25px, -85px) rotate(-5deg); }
+      75% { transform: translate(40px, -35px) rotate(6deg); }
+      100% { transform: translate(0, 0) rotate(0deg); opacity: 0.9; }
+    }
+
+    /* main card - mobile friendly */
+    .proposal-card {
+      position: relative;
+      z-index: 20;
+      background: rgba(255, 248, 245, 0.94);
+      backdrop-filter: blur(6px);
+      border-radius: 56px;
+      box-shadow: 0 25px 40px rgba(0, 0, 0, 0.2), 0 0 0 6px rgba(255, 215, 215, 0.7), 0 0 0 12px #ffb7c5;
+      padding: 1.8rem 1.5rem 2rem;
+      text-align: center;
+      max-width: 560px;
+      width: 90%;
+      transition: all 0.3s ease;
+      margin: 20px auto;
+    }
+
+    h1 {
+      font-size: 2rem;
+      background: linear-gradient(135deg, #c53a5f, #ff6f91);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 0.3rem;
+      letter-spacing: -0.5px;
+      font-weight: 800;
+    }
+
+    .tagline {
+      font-size: 1rem;
+      color: #b13e5c;
+      background: #fff0f0cc;
+      display: inline-block;
+      padding: 5px 18px;
+      border-radius: 60px;
+      margin-bottom: 20px;
+      font-weight: 600;
+      backdrop-filter: blur(2px);
+    }
+
+    /* Cat Sticker Section */
+    .cat-sticker {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 10px 0 5px;
+      transition: all 0.3s ease;
+    }
+    .cat-emoji {
+      font-size: 5rem;
+      filter: drop-shadow(0 8px 12px rgba(0,0,0,0.2));
+      transition: transform 0.2s ease;
+      animation: subtleFloat 3s infinite ease-in-out;
+    }
+    @keyframes subtleFloat {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0px); }
+    }
+    .cat-caption {
+      font-size: 0.9rem;
+      background: #ffe3e8;
+      padding: 4px 12px;
+      border-radius: 40px;
+      margin-left: 12px;
+      font-weight: 600;
+      color: #b13e5c;
+    }
+
+    .question {
+      font-size: 1.7rem;
+      font-weight: bold;
+      color: #911f48;
+      margin: 15px 0 20px;
+      background: #ffe6ea;
+      padding: 14px 16px;
+      border-radius: 70px;
+      display: inline-block;
+      width: auto;
+      box-shadow: inset 0 1px 4px #ffbfcf, 0 8px 12px rgba(0,0,0,0.05);
+      line-height: 1.3;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      margin: 20px 0 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-size: 1.8rem;
+      font-weight: bold;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 80px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      font-family: inherit;
+      box-shadow: 0 6px 0 rgba(0,0,0,0.1);
+      min-width: 130px;
+      touch-action: manipulation;
+    }
+
+    .btn-yes {
+      background: #ff5e7e;
+      color: white;
+      text-shadow: 0 1px 2px #a12042;
+      box-shadow: 0 8px 0 #a12042;
+    }
+
+    .btn-yes:active {
+      transform: scale(0.97);
+    }
+
+    .btn-no {
+      background: #4b3b40;
+      color: #fcd5d5;
+      position: relative;
+      transition: left 0.08s linear, top 0.08s linear;
+      box-shadow: 0 8px 0 #2c1f24;
+    }
+
+    .message-area {
+      margin-top: 20px;
+      font-size: 1.15rem;
+      font-weight: 600;
+      background: #fff0e7dd;
+      padding: 16px 18px;
+      border-radius: 50px;
+      color: #b13e62;
+      min-height: 110px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      backdrop-filter: blur(3px);
+      transition: 0.2s;
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    .drama-effect {
+      animation: shakeGlow 0.4s ease-in-out;
+    }
+
+    @keyframes shakeGlow {
+      0% { transform: scale(1); background: #fff0e7; }
+      50% { transform: scale(1.02); background: #ffe0e7; box-shadow: 0 0 15px #ff99aa; }
+      100% { transform: scale(1); background: #fff0e7dd; }
+    }
+
+    footer {
+      margin-top: 18px;
+      font-size: 0.7rem;
+      color: #ff9eb3;
+      font-weight: 500;
+    }
+
+    /* music controls */
+    .music-control {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      background: rgba(255,240,240,0.85);
+      backdrop-filter: blur(8px);
+      border-radius: 60px;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: #b13e5c;
+      border: 1px solid #ffb7c5;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: 0.2s;
+      font-family: monospace;
+    }
+    .music-control:active {
+      transform: scale(0.96);
+    }
+    .music-icon {
+      font-size: 1.3rem;
+    }
+
+    @media (max-width: 550px) {
+      .proposal-card {
+        padding: 1.2rem 1rem 1.6rem;
+        width: 92%;
+        border-radius: 48px;
+      }
+      h1 { font-size: 1.6rem; }
+      .question { font-size: 1.3rem; padding: 12px 12px; }
+      .btn { font-size: 1.4rem; padding: 10px 20px; min-width: 110px; }
+      .message-area { font-size: 1rem; padding: 12px 12px; min-height: 100px; }
+      .cat-emoji { font-size: 3.5rem; }
+      .cat-caption { font-size: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="balloon-container" id="balloonContainer"></div>
+
+<div class="proposal-card">
+  <h1>SPLITSVILLA VIBES</h1>
+  <div class="tagline">ultimate connection</div>
+  
+  <!-- Cat Sticker with dynamic mood -->
+  <div class="cat-sticker" id="catSticker">
+    <span class="cat-emoji" id="catEmoji">😺</span>
+    <span class="cat-caption" id="catCaption">Happy Cat says: Let's do this! 💖</span>
+  </div>
+  
+  <div class="question">Will you be my partner for Splitsvilla?</div>
+  <div class="buttons">
+    <button class="btn btn-yes" id="yesButton">YES</button>
+    <button class="btn btn-no" id="noButton">NO</button>
+  </div>
+  <div class="message-area" id="messageBox">
+    💬 click YES or try to catch NO...
+  </div>
+  <footer>destiny awaits on the other side</footer>
+</div>
+
+<div class="music-control" id="musicToggle">
+  <span class="music-icon" id="musicIcon">🎵</span>
+  <span id="musicStatus">Love Me Like You Do</span>
+</div>
+
+<script>
+  (function() {
+    // ------------------------------
+    // 1) HEART BALLOONS (floating)
+    // ------------------------------
+    const balloonContainer = document.getElementById('balloonContainer');
+    const BALLOON_COUNT = 24;
+    const HEART_SYMBOLS = ['❤️', '💖', '💗', '💓', '💕', '💝', '💘', '🧡', '❣️', '💟', '💞'];
+
+    function createRandomBalloon() {
+      const balloon = document.createElement('div');
+      balloon.classList.add('heart-balloon');
+      const randomHeart = HEART_SYMBOLS[Math.floor(Math.random() * HEART_SYMBOLS.length)];
+      balloon.innerHTML = randomHeart;
+      const size = 1.1 + Math.random() * 1.4;
+      balloon.style.fontSize = `${size}rem`;
+      const startX = Math.random() * window.innerWidth;
+      const startY = Math.random() * window.innerHeight;
+      balloon.style.left = `${startX}px`;
+      balloon.style.top = `${startY}px`;
+      const duration = 10 + Math.random() * 16;
+      const delay = Math.random() * 5;
+      balloon.style.animation = `floatAround ${duration}s infinite ease-in-out`;
+      balloon.style.animationDelay = `${delay}s`;
+      balloon.style.opacity = 0.7 + Math.random() * 0.3;
+      balloonContainer.appendChild(balloon);
+    }
+
+    for (let i = 0; i < BALLOON_COUNT; i++) {
+      createRandomBalloon();
+    }
+
+    setInterval(() => {
+      if (balloonContainer.children.length < 38) {
+        createRandomBalloon();
+        if (balloonContainer.children.length > 45) {
+          balloonContainer.removeChild(balloonContainer.children[0]);
+        }
+      }
+    }, 18000);
+
+    // ------------------------------
+    // 2) MUSIC: "Love Me Like You Do" - auto playing
+    // ------------------------------
+    let player = null;
+    let isPlayerReady = false;
+    let isMusicPlaying = true;
+    
+    function loadYouTubeAPI() {
+      if (document.getElementById('youtube-api')) return;
+      const tag = document.createElement('script');
+      tag.id = 'youtube-api';
+      tag.src = 'https://www.youtube.com/iframe_api';
+      const firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+    
+    window.onYouTubeIframeAPIReady = function() {
+      const playerDiv = document.createElement('div');
+      playerDiv.id = 'youtube-player';
+      playerDiv.style.position = 'fixed';
+      playerDiv.style.bottom = '-200px';
+      playerDiv.style.left = '-200px';
+      playerDiv.style.width = '1px';
+      playerDiv.style.height = '1px';
+      playerDiv.style.opacity = '0';
+      playerDiv.style.pointerEvents = 'none';
+      document.body.appendChild(playerDiv);
+      
+      player = new YT.Player('youtube-player', {
+        height: '1',
+        width: '1',
+        videoId: 'AJtDXIazrMc',
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          disablekb: 1,
+          loop: 1,
+          playlist: 'AJtDXIazrMc',
+          modestbranding: 1,
+          rel: 0,
+          showinfo: 0,
+          mute: 0
+        },
+        events: {
+          onReady: onPlayerReady,
+          onStateChange: onPlayerStateChange
+        }
+      });
+    };
+    
+    function onPlayerReady(event) {
+      isPlayerReady = true;
+      event.target.setVolume(35);
+      event.target.playVideo();
+    }
+    
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED && player) {
+        player.playVideo();
+      }
+    }
+    
+    function pauseMusic() {
+      if (player && isPlayerReady) {
+        player.pauseVideo();
+        isMusicPlaying = false;
+        updateMusicUI(false);
+      }
+    }
+    
+    function resumeMusic() {
+      if (player && isPlayerReady) {
+        player.playVideo();
+        isMusicPlaying = true;
+        updateMusicUI(true);
+      }
+    }
+    
+    function updateMusicUI(playing) {
+      const statusSpan = document.getElementById('musicStatus');
+      const iconSpan = document.getElementById('musicIcon');
+      if (playing) {
+        statusSpan.innerText = 'Love Me Like You Do';
+        iconSpan.innerText = '🎵';
+      } else {
+        statusSpan.innerText = 'Music Paused';
+        iconSpan.innerText = '🔇';
+      }
+    }
+    
+    const musicToggleBtn = document.getElementById('musicToggle');
+    musicToggleBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (isMusicPlaying) {
+        pauseMusic();
+      } else {
+        resumeMusic();
+      }
+    });
+    
+    loadYouTubeAPI();
+    
+    // ------------------------------
+    // 3) CAT STICKER MOOD MANAGEMENT
+    // ------------------------------
+    const catEmoji = document.getElementById('catEmoji');
+    const catCaption = document.getElementById('catCaption');
+    
+    // Mood states: happy, sad1, sad2, sad3, sad4, sad5 (progressive sadness)
+    const catMoods = {
+      happy: { emoji: '😺', caption: 'Happy Cat says: Let\'s do this! 💖' },
+      sad1: { emoji: '😿', caption: 'Cat is sad... please reconsider? 🥺' },
+      sad2: { emoji: '😿', caption: 'Cat\'s heart is breaking... 💔 say YES!' },
+      sad3: { emoji: '😭', caption: 'Devastated cat... purr-lease say YES! 😭' },
+      sad4: { emoji: '😭', caption: 'Cat is crying waterfalls... don\'t do this! 💧' },
+      sad5: { emoji: '💀😿', caption: 'Cat is dying inside... final chance! SAVE ME with YES!' }
+    };
+    
+    function setCatMood(level) {
+      // level: 0 = happy, 1-5 = sadness levels
+      if (level === 0) {
+        catEmoji.innerHTML = catMoods.happy.emoji;
+        catCaption.innerHTML = catMoods.happy.caption;
+        catEmoji.style.animation = 'subtleFloat 3s infinite ease-in-out';
+      } else if (level === 1) {
+        catEmoji.innerHTML = catMoods.sad1.emoji;
+        catCaption.innerHTML = catMoods.sad1.caption;
+      } else if (level === 2) {
+        catEmoji.innerHTML = catMoods.sad2.emoji;
+        catCaption.innerHTML = catMoods.sad2.caption;
+      } else if (level === 3) {
+        catEmoji.innerHTML = catMoods.sad3.emoji;
+        catCaption.innerHTML = catMoods.sad3.caption;
+      } else if (level === 4) {
+        catEmoji.innerHTML = catMoods.sad4.emoji;
+        catCaption.innerHTML = catMoods.sad4.caption;
+      } else if (level >= 5) {
+        catEmoji.innerHTML = catMoods.sad5.emoji;
+        catCaption.innerHTML = catMoods.sad5.caption;
+      }
+      // Add a little wobble for dramatic effect
+      catEmoji.style.transform = 'scale(1.05)';
+      setTimeout(() => { catEmoji.style.transform = ''; }, 300);
+    }
+    
+    // ------------------------------
+    // 4) NO BUTTON DRAMA: 5 attempts with dramatic messages & cat sadness
+    // ------------------------------
+    const noBtn = document.getElementById('noButton');
+    const yesBtn = document.getElementById('yesButton');
+    const messageBox = document.getElementById('messageBox');
+    
+    let isNoFixed = false;
+    let yesClickedFlag = false;
+    let noClickCount = 0;
+    const MAX_NO_CLICKS = 5;
+    
+    // Dramatic convincing messages for each NO (1st to 5th) with cat references
+    const dramaticMessages = [
+      "💔 Wait... did you just say NO? But Splitsvilla needs our chemistry! Look at the cat... even he's getting sad! 😿 Imagine the fire we'll bring! 🔥",
+      "😲 NO again? Come on! The world is waiting for our epic partnership. Don't break my heart AND the cat's heart! 💘 The cat is crying now!",
+      "💢 Really? A third NO? Our journey would be legendary! Every Splitsvilla winner had a spark like ours. Say YES and make the cat purr again! 🥺",
+      "😭 Fourth NO... my heart is crumbling. But look at this poor cat, he's devastated. I know deep down you feel the magic. One chance to change fate? 🌹",
+      "💀 Fifth and final NO... destiny is testing us. The cat is literally dying inside! But I refuse to give up! This is our moment. The universe wants us together. There's no escape now... only YES remains! SAVE THE CAT! 💞"
+    ];
+    
+    function showDramaticMessage(index) {
+      const msg = dramaticMessages[index - 1];
+      messageBox.innerHTML = msg;
+      messageBox.classList.add('drama-effect');
+      setTimeout(() => {
+        messageBox.classList.remove('drama-effect');
+      }, 500);
+      createMiniHeartBurst();
+    }
+    
+    function createMiniHeartBurst() {
+      for (let i = 0; i < 14; i++) {
+        const heart = document.createElement('div');
+        heart.innerHTML = ['❤️', '💖', '💗', '💘'][Math.floor(Math.random() * 4)];
+        heart.style.position = 'fixed';
+        heart.style.fontSize = `${14 + Math.random() * 18}px`;
+        heart.style.left = `${Math.random() * 100}%`;
+        heart.style.top = `${Math.random() * 80 + 10}%`;
+        heart.style.pointerEvents = 'none';
+        heart.style.zIndex = '9998';
+        heart.style.opacity = '0.8';
+        heart.style.animation = `fadeOutUp 0.8s ease-out forwards`;
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 800);
+      }
+    }
+    
+    // Add fade animation
+    const styleSheet = document.createElement('style');
+    styleSheet.textContent = `
+      @keyframes fadeOutUp {
+        0% { transform: translateY(0) scale(1); opacity: 0.9; }
+        100% { transform: translateY(-60px) scale(1.5); opacity: 0; }
+      }
+      @keyframes fallDown {
+        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(styleSheet);
+    
+    // NO button movement logic
+    function setNoFloatingMode() {
+      if (isNoFixed) return;
+      const rect = noBtn.getBoundingClientRect();
+      noBtn.style.position = 'fixed';
+      noBtn.style.left = `${rect.left}px`;
+      noBtn.style.top = `${rect.top}px`;
+      noBtn.style.width = `${rect.width}px`;
+      noBtn.style.height = `${rect.height}px`;
+      noBtn.style.margin = '0';
+      noBtn.style.zIndex = '999';
+      isNoFixed = true;
+    }
+    
+    function getRandomPositionWithinViewport(btn) {
+      const w = btn.offsetWidth;
+      const h = btn.offsetHeight;
+      const margin = 15;
+      const maxX = window.innerWidth - w - margin;
+      const maxY = window.innerHeight - h - margin;
+      const minX = margin;
+      const minY = margin;
+      let randX = Math.random() * (maxX - minX) + minX;
+      let randY = Math.random() * (maxY - minY) + minY;
+      return { x: randX, y: randY };
+    }
+    
+    function moveNoButton() {
+      if (!noBtn || yesClickedFlag) return;
+      if (!isNoFixed) setNoFloatingMode();
+      const { x, y } = getRandomPositionWithinViewport(noBtn);
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+    }
+    
+    function handleNoAttempt(e) {
+      if (yesClickedFlag) return;
+      e.preventDefault();
+      e.stopPropagation();
+      
+      // Increment counter
+      noClickCount++;
+      
+      if (noClickCount <= MAX_NO_CLICKS) {
+        // Show dramatic message for this NO attempt
+        showDramaticMessage(noClickCount);
+        
+        // Update cat mood to sad according to count (progressive sadness)
+        if (noClickCount === 1) setCatMood(1);
+        else if (noClickCount === 2) setCatMood(2);
+        else if (noClickCount === 3) setCatMood(3);
+        else if (noClickCount === 4) setCatMood(4);
+        else if (noClickCount >= 5) setCatMood(5);
+        
+        // Move the NO button
+        moveNoButton();
+        
+        // If we've reached the 5th NO, remove NO button entirely
+        if (noClickCount === MAX_NO_CLICKS) {
+          noBtn.style.opacity = '0';
+          noBtn.style.pointerEvents = 'none';
+          noBtn.style.cursor = 'default';
+          noBtn.removeEventListener('mouseenter', handleNoAttempt);
+          noBtn.removeEventListener('click', handleNoAttempt);
+          noBtn.removeEventListener('touchstart', handleNoAttempt);
+          noBtn.removeEventListener('mousedown', handleNoAttempt);
+          
+          // Final dramatic message with cat
+          setTimeout(() => {
+            if (!yesClickedFlag) {
+              messageBox.innerHTML = "💀 The cat is on his last life! No more escape! Destiny chose us. Only YES remains... press it and save the cat! Let's rule Splitsvilla together! 💗";
+              messageBox.classList.add('drama-effect');
+              setTimeout(() => messageBox.classList.remove('drama-effect'), 600);
+              createMiniHeartBurst();
+            }
+          }, 200);
+        }
+      } else {
+        moveNoButton();
+      }
+    }
+    
+    // Attach NO button events
+    noBtn.addEventListener('mouseenter', handleNoAttempt);
+    noBtn.addEventListener('click', handleNoAttempt);
+    noBtn.addEventListener('touchstart', handleNoAttempt, { passive: false });
+    noBtn.addEventListener('mousedown', handleNoAttempt);
+    
+    // ------------------------------
+    // 5) YES BUTTON: Makes cat happy again + celebration
+    // ------------------------------
+    function createCelebrationHearts() {
+      for (let i = 0; i < 90; i++) {
+        const heartDiv = document.createElement('div');
+        heartDiv.innerHTML = ['❤️', '💖', '💗', '💘', '💝', '💕', '💞', '💓'][Math.floor(Math.random() * 8)];
+        heartDiv.style.position = 'fixed';
+        heartDiv.style.fontSize = `${16 + Math.random() * 34}px`;
+        heartDiv.style.left = `${Math.random() * 100}%`;
+        heartDiv.style.top = `-30px`;
+        heartDiv.style.pointerEvents = 'none';
+        heartDiv.style.zIndex = '9999';
+        heartDiv.style.opacity = '0.9';
+        heartDiv.style.animation = `fallDown ${1.2 + Math.random() * 1.6}s linear forwards`;
+        document.body.appendChild(heartDiv);
+        setTimeout(() => heartDiv.remove(), 2600);
+      }
+    }
+    
+    function showYesMessage() {
+      if (yesClickedFlag) return;
+      yesClickedFlag = true;
+      
+      // Make cat HAPPY again!
+      setCatMood(0);
+      
+      // Add extra joyful cat animation
+      catEmoji.style.animation = 'subtleFloat 0.5s infinite alternate';
+      setTimeout(() => {
+        catEmoji.style.animation = 'subtleFloat 3s infinite ease-in-out';
+      }, 1000);
+      
+      // Disable NO button completely
+      noBtn.style.opacity = '0';
+      noBtn.style.pointerEvents = 'none';
+      noBtn.removeEventListener('mouseenter', handleNoAttempt);
+      noBtn.removeEventListener('click', handleNoAttempt);
+      noBtn.removeEventListener('touchstart', handleNoAttempt);
+      noBtn.removeEventListener('mousedown', handleNoAttempt);
+      
+      // Final message as required
+      messageBox.innerHTML = "I knew u will say yes and will meet u on the other side with heart ❤️  😺 Cat is dancing with joy!";
+      
+      // Celebration hearts
+      createCelebrationHearts();
+      
+      // Floating romantic message
+      const extraMsg = document.createElement('div');
+      extraMsg.innerText = 'See you on the Splitsvilla stage! Together we shine! 😺💕';
+      extraMsg.style.position = 'fixed';
+      extraMsg.style.bottom = '20%';
+      extraMsg.style.left = '50%';
+      extraMsg.style.transform = 'translateX(-50%)';
+      extraMsg.style.background = '#ffebf0dd';
+      extraMsg.style.backdropFilter = 'blur(8px)';
+      extraMsg.style.padding = '12px 24px';
+      extraMsg.style.borderRadius = '60px';
+      extraMsg.style.fontWeight = 'bold';
+      extraMsg.style.color = '#b41e4a';
+      extraMsg.style.boxShadow = '0 10px 20px rgba(0,0,0,0.2)';
+      extraMsg.style.zIndex = '1000';
+      extraMsg.style.fontSize = '1.1rem';
+      extraMsg.style.border = '2px solid #ff99aa';
+      extraMsg.style.textAlign = 'center';
+      document.body.appendChild(extraMsg);
+      setTimeout(() => {
+        extraMsg.style.opacity = '0';
+        extraMsg.style.transition = 'opacity 1s';
+        setTimeout(() => extraMsg.remove(), 1200);
+      }, 3500);
+      
+      // Card bounce
+      const card = document.querySelector('.proposal-card');
+      card.style.transform = 'scale(1.01)';
+      setTimeout(() => { card.style.transform = ''; }, 400);
+    }
+    
+    yesBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (yesClickedFlag) return;
+      showYesMessage();
+    });
+    
+    yesBtn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      yesBtn.click();
+    }, { passive: false });
+    
+    // Reposition NO button on window resize if needed
+    window.addEventListener('resize', () => {
+      if (isNoFixed && noBtn.style.position === 'fixed' && !yesClickedFlag && noClickCount < MAX_NO_CLICKS) {
+        const rect = noBtn.getBoundingClientRect();
+        const btnW = rect.width;
+        const btnH = rect.height;
+        let left = parseFloat(noBtn.style.left);
+        let top = parseFloat(noBtn.style.top);
+        const maxX = window.innerWidth - btnW - 15;
+        const maxY = window.innerHeight - btnH - 15;
+        if (left > maxX) left = maxX;
+        if (left < 15) left = 15;
+        if (top > maxY) top = maxY;
+        if (top < 15) top = 15;
+        noBtn.style.left = `${left}px`;
+        noBtn.style.top = `${top}px`;
+      }
+    });
+    
+    // Initial message & happy cat at start
+    setCatMood(0); // happy cat from the very beginning
+    setTimeout(() => {
+      if (!yesClickedFlag && noClickCount === 0) {
+        messageBox.innerHTML = "Will you be my Splitsvilla partner? Click YES... or dare to say NO? 😺 The cat believes in us!";
+      }
+    }, 500);
+  })();
+</script>
+</body>
+</html>
